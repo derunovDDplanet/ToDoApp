@@ -6,7 +6,7 @@
     <ProjectGuid>{4F3928A0-0F5C-496C-806A-09FD5C1975C8}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>StarWarsSample.iOS</RootNamespace>
+    <RootNamespace>ToDo.iOS</RootNamespace>
     <AssemblyName>StarWarsSample.iOS</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <NuGetPackageImportStamp>
@@ -114,6 +114,7 @@
     <Compile Include="Views\Cells\MyTableViewCell.designer.cs">
       <DependentUpon>MyTableViewCell.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\UserNotificationCenterDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs">
@@ -153,6 +154,7 @@
   <ItemGroup>
     <Folder Include="Assets.xcassets\Appicon1.appiconset\" />
     <Folder Include="Assets.xcassets\.appiconset\" />
+    <Folder Include="Classes\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ToDo.Core\ToDo.Core.csproj">

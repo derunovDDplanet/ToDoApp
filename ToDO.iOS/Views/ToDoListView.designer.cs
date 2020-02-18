@@ -22,11 +22,21 @@ namespace ToDo.iOS.Views
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITableView TableView { get; set; }
 
+        [Outlet]
+        [GeneratedCode("iOS Designer", "1.0")]
+        UIKit.UISearchBar SearchBar { get; set; }
+
         void ReleaseDesignerOutlets ()
         {
             if (AddNoteButton != null) {
                 AddNoteButton.Dispose ();
                 AddNoteButton = null;
+            }
+
+            if (SearchBar != null)
+            {
+                SearchBar.Dispose();
+                SearchBar = null;
             }
 
             if (TableView != null) {

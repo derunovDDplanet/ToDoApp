@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
@@ -12,11 +12,45 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cxk-wN-pdQ" id="YTl-1W-gDM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uAP-ZV-Vci" userLabel="Button">
+                        <rect key="frame" x="286" y="11" width="19" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="19" id="me1-3C-vdg"/>
+                        </constraints>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" image="ellipsis" catalog="system">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HeJ-X1-KUW" userLabel="Label">
+                        <rect key="frame" x="5" y="12" width="271" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="uAP-ZV-Vci" firstAttribute="leading" secondItem="HeJ-X1-KUW" secondAttribute="trailing" constant="10" id="3vw-EJ-urJ"/>
+                    <constraint firstItem="uAP-ZV-Vci" firstAttribute="top" secondItem="YTl-1W-gDM" secondAttribute="top" constant="11" id="4e2-T2-gcO"/>
+                    <constraint firstAttribute="bottom" secondItem="uAP-ZV-Vci" secondAttribute="bottom" constant="11" id="YXj-da-X6b"/>
+                    <constraint firstItem="HeJ-X1-KUW" firstAttribute="top" secondItem="YTl-1W-gDM" secondAttribute="top" constant="12" id="bci-IZ-qXk"/>
+                    <constraint firstAttribute="trailing" secondItem="uAP-ZV-Vci" secondAttribute="trailing" constant="15" id="sQU-at-eSi"/>
+                    <constraint firstItem="HeJ-X1-KUW" firstAttribute="leading" secondItem="YTl-1W-gDM" secondAttribute="leading" constant="5" id="wfu-Cl-2As"/>
+                </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="41" y="59"/>
-            <color key="backgroundColor" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" white="0.666666666666667" alpha="1"/>
+            <color key="backgroundColor" white="0.66666666666666696" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="Button" destination="uAP-ZV-Vci" id="name-outlet-uAP-ZV-Vci"/>
+                <outlet property="Label" destination="HeJ-X1-KUW" id="name-outlet-HeJ-X1-KUW"/>
+            </connections>
+            <point key="canvasLocation" x="40.579710144927539" y="58.928571428571423"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="ellipsis" catalog="system" width="64" height="18"/>
+    </resources>
 </document>

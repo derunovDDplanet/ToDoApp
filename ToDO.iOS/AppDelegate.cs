@@ -1,8 +1,10 @@
 ﻿using Foundation;
+using UserNotifications;
 using MvvmCross.Platforms.Ios.Core;
 using MvvmCross.Plugin.Color.Platforms.Ios;
 using ToDo.Core;
 using UIKit;
+using ToDo.iOS.Classes;
 
 namespace ToDo.iOS
 {
@@ -15,7 +17,12 @@ namespace ToDo.iOS
         {
             var result = base.FinishedLaunching(application, launchOptions);
 
-            
+            // Request notification permissions from the user
+            UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert, (approved, err) => {
+                // Handle approval
+            });
+
+            UNUserNotificationCenter.Current.Delegate = new UserNotificationCenterDelegate();
 
             return result;
         }

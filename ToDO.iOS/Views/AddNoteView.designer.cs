@@ -19,6 +19,10 @@ namespace ToDo.iOS.Views
         UIKit.UIButton CancelButton { get; set; }
 
         [Outlet]
+        [GeneratedCode("iOS Designer", "1.0")]
+        UIKit.UIButton ActionsButton { get; set; }
+
+        [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton ConfirmButton { get; set; }
 
@@ -30,11 +34,27 @@ namespace ToDo.iOS.Views
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITextField HeaderText { get; set; }
 
+        [Outlet]
+        [GeneratedCode("iOS Designer", "1.0")]
+        UIKit.UILabel CompletedLabel { get; set; }
+
         void ReleaseDesignerOutlets ()
         {
             if (CancelButton != null) {
                 CancelButton.Dispose ();
                 CancelButton = null;
+            }
+
+            if (CompletedLabel != null)
+            {
+                CompletedLabel.Dispose();
+                CompletedLabel = null;
+            }
+
+            if (ActionsButton != null)
+            {
+                ActionsButton.Dispose();
+                ActionsButton = null;
             }
 
             if (ConfirmButton != null) {

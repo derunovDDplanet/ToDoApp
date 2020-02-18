@@ -13,29 +13,35 @@ namespace ToDo.iOS.Views.Cells
     {
         public static readonly NSString Key = new NSString("MyTableViewCell");
         public static readonly UINib Nib;
+     
 
         static MyTableViewCell()
         {
             Nib = UINib.FromName("MyTableViewCell", NSBundle.MainBundle);
-            
+
         }
 
         protected MyTableViewCell(IntPtr handle) : base(handle)
         {
 
-            CompleteUI();
+            
             this.DelayBind(() =>
             {
                 var set = this.CreateBindingSet<MyTableViewCell, Note>();
-                set.Bind(TextLabel).To(v => v.Header);
+                set.Bind(Label).To(v => v.Header);
+                set.Bind(Button).To(v=>v.ActionSheetCommand);
                 set.Apply();
             });
-           
-        }
 
+            CompleteUI();
+        }
+        
         private void CompleteUI()
         {
             this.SelectionStyle = UITableViewCellSelectionStyle.None;
+            
         }
+
+
     }
 }

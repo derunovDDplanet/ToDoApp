@@ -15,18 +15,14 @@ namespace ToDo.iOS.Sources
 
         public NotesTableViewSource(UITableView tableView) : base(tableView, typeof(MyTableViewCell))
         {
+            tableView.RegisterNibForCellReuse(MyTableViewCell.Nib, nameof(MyTableViewCell));
             DeselectAutomatically = true;
         }
 
         public IMvxCommand<Note> ItemRemoveCommand { get; set; }
 
 
-        protected override UITableViewCell GetOrCreateCellFor(UITableView tableView, NSIndexPath indexPath, object item)
-        {
-            var cell = base.GetOrCreateCellFor(tableView, indexPath, item);
-
-            return cell;
-        }
+        
 
         public override bool CanEditRow(UITableView tableView, NSIndexPath indexPath)
         {

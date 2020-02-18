@@ -1,0 +1,10 @@
+/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/bin/Debug/netstandard2.0/ToDo.Core.deps.json
+/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/bin/Debug/netstandard2.0/ToDo.Core.dll
+/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/bin/Debug/netstandard2.0/ToDo.Core.pdb
+/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/obj/Debug/netstandard2.0/ToDo.Core.Resources.Strings.resources
+/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/obj/Debug/netstandard2.0/ToDo.Core.csproj.GenerateResource.cache
+/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/obj/Debug/netstandard2.0/ToDo.Core.AssemblyInfoInputs.cache
+/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/obj/Debug/netstandard2.0/ToDo.Core.AssemblyInfo.cs
+/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/obj/Debug/netstandard2.0/ToDo.Core.dll
+/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/obj/Debug/netstandard2.0/ToDo.Core.pdb
+/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/obj/Debug/netstandard2.0/ToDo.Core.csprojAssemblyReference.cache

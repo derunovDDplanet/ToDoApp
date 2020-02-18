@@ -4,6 +4,7 @@
 // actions declared in your storyboard file.
 // Manual changes to this file will not be maintained.
 //
+using System.CodeDom.Compiler;
 using Foundation;
 
 namespace ToDo.iOS.Views.Cells
@@ -11,8 +12,27 @@ namespace ToDo.iOS.Views.Cells
     [Register("MyTableViewCell")]
     partial class MyTableViewCell
     {
+        [Outlet]
+        [GeneratedCode("iOS Designer", "1.0")]
+        UIKit.UIButton Button { get; set; }
+
+        [Outlet]
+        [GeneratedCode("iOS Designer", "1.0")]
+        UIKit.UILabel Label { get; set; }
+
         void ReleaseDesignerOutlets()
         {
+            if (Button != null)
+            {
+                Button.Dispose();
+                Button = null;
+            }
+
+            if (Label != null)
+            {
+                Label.Dispose();
+                Label = null;
+            }
         }
     }
 }

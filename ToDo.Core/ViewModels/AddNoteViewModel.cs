@@ -10,21 +10,24 @@ namespace ToDo.Core
     public class AddNoteViewModel : MvxViewModel<Note,AddNoteViewModel.Result>
     {
         readonly IMvxNavigationService _navigationService;
-        
+        private bool _isDone;
+        private bool _isEditing;
 
         public AddNoteViewModel(IMvxNavigationService mvxNavigationService)
         {
             _navigationService = mvxNavigationService;
-            
+            IsDone = false;
         }
 
         public IMvxCommand BackCommand => new MvxAsyncCommand(async () => await _navigationService.Close(this, new Result() { IsRejected = true }));
         public IMvxCommand ConfirmCommand => new MvxAsyncCommand(ConfirmExecute);
-
+        public IMvxCommand CompletedCommand => new MvxCommand(CompletedCommandExecute);
+        
 
 
         public Note Note { get; set; }
-        public bool IsEditing { get; set; }
+        public bool IsEditing { get => _isEditing; set => SetProperty(ref _isEditing, value); }
+        public bool IsDone { get => _isDone; set => SetProperty(ref _isDone, value); }
 
         public string Header { get; set; }
         
@@ -37,11 +40,15 @@ namespace ToDo.Core
             Header = parameter.Header;
             Content = parameter.Content;
             IsEditing = true;
+            IsDone = parameter.IsDone;
         }
 
-        
 
-        
+        private void CompletedCommandExecute()
+        {
+            IsDone = !IsDone;
+            
+        }
 
         private async Task ConfirmExecute()
         {
@@ -49,10 +56,11 @@ namespace ToDo.Core
             {
                 Note.Header = Header;
                 Note.Content = Content;
+                Note.IsDone = IsDone;
             }
             else
             {
-                Note = new Note(Header, Content);
+                Note = new Note(Header, Content, IsDone);
             }
 
             await _navigationService.Close(this, new Result() { note = Note });
