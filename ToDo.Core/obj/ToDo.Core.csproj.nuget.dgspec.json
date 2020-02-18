@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/ToDo.Core.csproj": {}
+    "/Users/ddp/Documents/GitHub/ToDoApp/ToDo.Core/ToDo.Core.csproj": {}
   },
   "projects": {
-    "/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/ToDo.Core.csproj": {
+    "/Users/ddp/Documents/GitHub/ToDoApp/ToDo.Core/ToDo.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/ToDo.Core.csproj",
+        "projectUniqueName": "/Users/ddp/Documents/GitHub/ToDoApp/ToDo.Core/ToDo.Core.csproj",
         "projectName": "ToDo.Core",
-        "projectPath": "/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/ToDo.Core.csproj",
+        "projectPath": "/Users/ddp/Documents/GitHub/ToDoApp/ToDo.Core/ToDo.Core.csproj",
         "packagesPath": "/Users/ddp/.nuget/packages/",
-        "outputPath": "/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/obj/",
+        "outputPath": "/Users/ddp/Documents/GitHub/ToDoApp/ToDo.Core/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/ddp/.config/NuGet/NuGet.Config"
@@ -42,7 +42,7 @@
             },
             "MvvmCross": {
               "target": "Package",
-              "version": "[6.2.3, )"
+              "version": "[6.4.2, )"
             },
             "MvvmCross.Plugin.Json": {
               "target": "Package",
@@ -50,7 +50,7 @@
             },
             "MvvmCross.Plugin.Messenger": {
               "target": "Package",
-              "version": "[6.4.3, )"
+              "version": "[6.2.3, )"
             },
             "MvvmCross.Plugin.Visibility": {
               "target": "Package",

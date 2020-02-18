@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,22 +24,23 @@ namespace ToDo.Core
         private readonly IMvxNavigationService _navigationService;
         private  string _searchText;
 
-        public IMvxMessenger Messenger => Mvx.IoCProvider.Resolve<IMvxMessenger>();
+        public ServiceBunch Service;
 
         public  ToDoListViewModel(IMvxNavigationService mvxNavigationService)
         {
             _navigationService = mvxNavigationService;
-            NoteSelectedCommand = new MvxAsyncCommand<Note>(NoteSelected);
             Notes = new MvxObservableCollection<Note>();
+            Notes.CollectionChanged += OnCollectionChanged;
+
         }
 
       
 
         public IMvxCommand AddNoteCommand => new MvxAsyncCommand(AddNoteExecute);
-        public IMvxCommand<Note> NoteSelectedCommand { get; private set; }
+        public IMvxCommand<Note> NoteSelectedCommand => new MvxAsyncCommand<Note>(NoteSelected);
         public IMvxCommand<Note> RemoveFromToDoListCommand => new MvxAsyncCommand<Note>(RemoveFromToDoListExecute);
 
-        public IMvxCommand<Note> ActionCommand { get; set; }
+        
 
 
        
@@ -64,10 +66,8 @@ namespace ToDo.Core
 
         public MvxObservableCollection<Note> SearchResult
         {
-            get
-            {
-                return _searchResult;
-            }
+            get => _searchResult;
+            
             set => SetProperty(ref _searchResult, value);
         }
 
@@ -128,7 +128,6 @@ namespace ToDo.Core
             {
                 result.note.Header = "Без названия";
             }
-            result.note.ActionSheetEventHandler += ActionSheetExecute;
             Notes.Add(result.note);
             await RaisePropertyChanged(nameof(Notes));
             await RaisePropertyChanged(nameof(SearchResult));
@@ -139,20 +138,38 @@ namespace ToDo.Core
         private async Task RemoveFromToDoListExecute(Note note)
         {
             Notes.Remove(note);
-            await RaisePropertyChanged(nameof(Notes));
-            await RaisePropertyChanged(nameof(SearchResult));
+            SearchResult.Remove(note);
             await App.DataBase.DeleteItemAsync(note);
             
         }
 
         private void ActionSheetExecute(object sender, EventArgs e)
         {
-
-            var message = new MyMessage(sender);
-            Messenger.Publish(message);
+            var message = new AlertDialogMessage(sender);
+            Service.Messenger.Publish(message);
         }
 
-        
+        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var asd = sender as MvxObservableCollection<Note>;
+            if (e.NewItems != null)
+            {
+                foreach (Note newItem in e.NewItems)
+                {
+                    newItem.ActionSheetEventHandler += ActionSheetExecute;
+                }
+            }
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+                if (e.OldItems != null)
+                {
+                    foreach (Note oldItem in e.OldItems)
+                    {
+                        oldItem.ActionSheetEventHandler -= ActionSheetExecute;
+                    }
+
+                }
+        }
+
     }
 }
 

@@ -12,9 +12,17 @@ namespace ToDo.iOS.Views
     public partial class AddNoteView : MvxViewController<AddNoteViewModel>
     {
         private bool _isDone;
-        public bool IsDone { get => _isDone; set=> _isDone = value;  }
+        public bool IsDone
+        {
+            get => _isDone;
+            set=> _isDone = value;
+        }
         private bool _isEditing;
-        public bool IsEditing { get => _isEditing; set { _isEditing = value; } }
+        public bool IsEditing
+        {
+            get => _isEditing;
+            set => _isEditing = value; 
+        }
 
         public IMvxCommand CompletedCommand { get; set; }
 

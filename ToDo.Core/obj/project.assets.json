@@ -20,7 +20,7 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "MvvmCross/6.2.3": {
+      "MvvmCross/6.4.2": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/MvvmCross.dll": {}
@@ -189,22 +189,32 @@
         "runtime.json"
       ]
     },
-    "MvvmCross/6.2.3": {
-      "sha512": "SXUTzVtwh2T0IBxLWkmalxWMFhY71Ib2So67oXWxd4FGlqTmqmaaG/JfI36czEeyEdbaXvSaveYFf7qanoOmnA==",
+    "MvvmCross/6.4.2": {
+      "sha512": "ttJOEXQE8MFEMlcuJL6Eonzj1QtfhO95qTrQLcdirV+41PgT7se4XqdDWqL263nrl/2i4CATC2qgokh7IV8msA==",
       "type": "package",
-      "path": "mvvmcross/6.2.3",
+      "path": "mvvmcross/6.4.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/monoandroid81/MvvmCross.dll",
-        "lib/monoandroid81/MvvmCross.pdb",
-        "lib/monoandroid81/MvvmCross.xml",
+        "LICENSE",
+        "lib/monoandroid10.0/MvvmCross.dll",
+        "lib/monoandroid10.0/MvvmCross.pdb",
+        "lib/monoandroid10.0/MvvmCross.xml",
+        "lib/monoandroid90/MvvmCross.dll",
+        "lib/monoandroid90/MvvmCross.pdb",
+        "lib/monoandroid90/MvvmCross.xml",
         "lib/net461/MvvmCross.dll",
         "lib/net461/MvvmCross.pdb",
         "lib/net461/MvvmCross.xml",
-        "lib/netcoreapp2.0/MvvmCross.dll",
-        "lib/netcoreapp2.0/MvvmCross.pdb",
-        "lib/netcoreapp2.0/MvvmCross.xml",
+        "lib/netcoreapp2.1/MvvmCross.dll",
+        "lib/netcoreapp2.1/MvvmCross.pdb",
+        "lib/netcoreapp2.1/MvvmCross.xml",
+        "lib/netcoreapp3.0/MvvmCross.dll",
+        "lib/netcoreapp3.0/MvvmCross.pdb",
+        "lib/netcoreapp3.0/MvvmCross.xml",
+        "lib/netcoreapp3.1/MvvmCross.dll",
+        "lib/netcoreapp3.1/MvvmCross.pdb",
+        "lib/netcoreapp3.1/MvvmCross.xml",
         "lib/netstandard2.0/MvvmCross.dll",
         "lib/netstandard2.0/MvvmCross.pdb",
         "lib/netstandard2.0/MvvmCross.xml",
@@ -227,7 +237,7 @@
         "lib/xamarinwatchos10/MvvmCross.dll",
         "lib/xamarinwatchos10/MvvmCross.pdb",
         "lib/xamarinwatchos10/MvvmCross.xml",
-        "mvvmcross.6.2.3.nupkg.sha512",
+        "mvvmcross.6.4.2.nupkg.sha512",
         "mvvmcross.nuspec",
         "readme.txt"
       ]
@@ -576,7 +586,7 @@
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "Acr.UserDialogs >= 7.0.4",
-      "MvvmCross >= 6.2.3",
+      "MvvmCross >= 6.4.2",
       "MvvmCross.Plugin.Json >= 6.2.3",
       "MvvmCross.Plugin.Messenger >= 6.2.3",
       "MvvmCross.Plugin.Visibility >= 6.2.3",
@@ -591,11 +601,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/ToDo.Core.csproj",
+      "projectUniqueName": "/Users/ddp/Documents/GitHub/ToDoApp/ToDo.Core/ToDo.Core.csproj",
       "projectName": "ToDo.Core",
-      "projectPath": "/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/ToDo.Core.csproj",
+      "projectPath": "/Users/ddp/Documents/GitHub/ToDoApp/ToDo.Core/ToDo.Core.csproj",
       "packagesPath": "/Users/ddp/.nuget/packages/",
-      "outputPath": "/Users/ddp/Downloads/ToDoApp-master/ToDo.Core/obj/",
+      "outputPath": "/Users/ddp/Documents/GitHub/ToDoApp/ToDo.Core/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/ddp/.config/NuGet/NuGet.Config"
@@ -626,7 +636,7 @@
           },
           "MvvmCross": {
             "target": "Package",
-            "version": "[6.2.3, )"
+            "version": "[6.4.2, )"
           },
           "MvvmCross.Plugin.Json": {
             "target": "Package",

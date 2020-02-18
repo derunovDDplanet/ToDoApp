@@ -18,11 +18,10 @@ namespace ToDo.iOS.Views
     public partial class ToDoListView : MvxViewController<ToDoListViewModel>
     {
         private Note Note;
-        private IMvxMessenger Messenger=> Mvx.IoCProvider.Resolve<IMvxMessenger>();
+        public ServiceBunch Service;
         private MvxSubscriptionToken _token;
         public bool IsDone { get; set; }
         public IMvxCommand CompletedCommand { get; set; }
-
         public ToDoListView() : base("ToDoListView", null)
         {
             
@@ -33,7 +32,7 @@ namespace ToDo.iOS.Views
             base.ViewDidLoad();
             ApplyBinding();
             TableView.TableHeaderView = SearchBar;
-            _token = Messenger.SubscribeOnMainThread<MyMessage>(ActionExecute);
+            _token = Service.Messenger.SubscribeOnMainThread<AlertDialogMessage>(ActionExecute);
 
 
         }
@@ -57,7 +56,7 @@ namespace ToDo.iOS.Views
 
         }
 
-        private void ActionExecute(MyMessage message)
+        private void ActionExecute(AlertDialogMessage message)
         {
             var Note = message.Note;
             
@@ -73,9 +72,6 @@ namespace ToDo.iOS.Views
             actionSheetAlert.AddAction(UIAlertAction.Create(CompletedLabel, UIAlertActionStyle.Default, (action) =>
             {
                 Note.IsDone = !Note.IsDone;
-                //CompletedCommand?.Execute();
-                //CompleteUI();
-
             }
             ));
 
