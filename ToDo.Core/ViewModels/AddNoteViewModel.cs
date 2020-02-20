@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using MvvmCross;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
+using ToDo.Core.Interfaces;
 using ToDo.Core.Models;
+using ToDo.Core.Services;
 
 namespace ToDo.Core
 {
@@ -12,6 +15,7 @@ namespace ToDo.Core
         readonly IMvxNavigationService _navigationService;
         private bool _isDone;
         private bool _isEditing;
+        public ServiceBunch Service;
 
         public AddNoteViewModel(IMvxNavigationService mvxNavigationService)
         {
@@ -21,8 +25,8 @@ namespace ToDo.Core
 
         public IMvxCommand BackCommand => new MvxAsyncCommand(async () => await _navigationService.Close(this, new Result() { IsRejected = true }));
         public IMvxCommand ConfirmCommand => new MvxAsyncCommand(ConfirmExecute);
-        public IMvxCommand CompletedCommand => new MvxCommand(CompletedCommandExecute);
-        
+        public IMvxCommand CompletedCommand => new MvxCommand<Note>(CompletedCommandExecute);
+        public IMvxCommand ActionSheetCommand => new MvxCommand(ActionSheetExecute);
 
 
         public Note Note { get; set; }
@@ -52,7 +56,7 @@ namespace ToDo.Core
         }
 
 
-        private void CompletedCommandExecute()
+        private void CompletedCommandExecute(Note note)
         {
             IsDone = !IsDone;
             
@@ -72,6 +76,24 @@ namespace ToDo.Core
             }
 
             await _navigationService.Close(this, new Result() { note = Note });
+
+        }
+
+        private void ActionSheetExecute()
+        {
+            string CompletedLabel = IsDone == true ? "Completed" : "Not completed";
+            var dialogAction = new[]
+            {
+                new DialogActionInfo ("Remind After 5 minutes",(note)=>Mvx.IoCProvider.Resolve<IRemind>().Remind(note)),
+                new DialogActionInfo (CompletedLabel,CompletedCommandExecute),
+                new DialogActionInfo ("Cancel") {IsCancel=true}
+            };
+            var showAcionDialogMessage = new AlertDialogMessage(Note)
+            {
+                Actions = dialogAction
+            };
+
+            Service.Messenger.Publish(showAcionDialogMessage);
 
         }
 

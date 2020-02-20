@@ -2,7 +2,9 @@
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Commands;
 using MvvmCross.Platforms.Ios.Views;
+using MvvmCross.Plugin.Messenger;
 using ToDo.Core;
+using ToDo.Core.Services;
 using UIKit;
 using UserNotifications;
 
@@ -11,6 +13,9 @@ namespace ToDo.iOS.Views
 {
     public partial class AddNoteView : MvxViewController<AddNoteViewModel>
     {
+        private MvxSubscriptionToken _token;
+        public ServiceBunch Service;
+
         private bool _isDone;
         public bool IsDone
         {
@@ -31,38 +36,15 @@ namespace ToDo.iOS.Views
 
         }
 
+
         public override void ViewDidLoad()
         {
             
             base.ViewDidLoad();
             ApplyBinding();
             CompleteUI();
+            _token = Service.Messenger.SubscribeOnMainThread<AlertDialogMessage>(ActionExecute);
 
-            ActionsButton.TouchUpInside+=((sender, e) =>
-            {
-
-                // Create a new Alert Controller
-                UIAlertController actionSheetAlert = UIAlertController.Create(null, null, UIAlertControllerStyle.ActionSheet);
-
-                // Add Actions
-                if(IsEditing) actionSheetAlert.AddAction(UIAlertAction.Create("Remind After 5 minutes", UIAlertActionStyle.Default, Do));
-
-                actionSheetAlert.AddAction(UIAlertAction.Create("Completed", UIAlertActionStyle.Default, (action)=>
-                {
-                    IsDone = !IsDone;
-                    CompletedCommand?.Execute();
-                    CompleteUI();
-                    
-                    }
-                ));
-
-                actionSheetAlert.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel,null));
-
-               
-
-                // Display the alert
-                this.PresentViewController(actionSheetAlert, true, null);
-            });
         }
         
         private void ApplyBinding()
@@ -75,26 +57,36 @@ namespace ToDo.iOS.Views
             set.Bind(this).For(v=>v.CompletedCommand).To(vm => vm.CompletedCommand);
             set.Bind(this).For(v => v.IsDone).To(vm => vm.IsDone).OneWay();
             set.Bind(this).For(v => v.IsEditing).To(vm => vm.IsEditing).OneWay();
+            set.Bind(ActionsButton).To(vm => vm.ActionSheetCommand);
             
             set.Apply();
         }
 
-        private void Do(UIAlertAction action)
+        private void ActionExecute(AlertDialogMessage message)
         {
-            var content = new UNMutableNotificationContent();
-            content.Title = "You have to do an important thing";
-            content.Subtitle = HeaderText.Text;
-            content.Body = ContentText.Text;
-            content.Badge = 1;
 
-            var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(2, false);
+            // Create a new Alert Controller
+            UIAlertController actionSheetAlert = UIAlertController.Create(null, null, UIAlertControllerStyle.ActionSheet);
 
-            var requestID = "sampleRequest";
-            var request = UNNotificationRequest.FromIdentifier(requestID, content, trigger);
-            
+            // Add Actions
+            if (message.Actions != null)
+            {
+                foreach (var actionInfo in message.Actions)
+                {
+                    UIAlertActionStyle style = actionInfo.IsCancel ? UIAlertActionStyle.Cancel : UIAlertActionStyle.Default;
+                    var alertAction = UIAlertAction.Create(actionInfo.Title, style, a => actionInfo.Action?.Invoke(message.Note));
+                    actionSheetAlert.AddAction(alertAction);
 
-            UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { });
+                }
+            }
+
+
+            // Display the alert
+            this.PresentViewController(actionSheetAlert, true, null);
+
         }
+
+
 
         private void CompleteUI()
         {

@@ -17,7 +17,6 @@ namespace ToDo.iOS.Views
 {
     public partial class ToDoListView : MvxViewController<ToDoListViewModel>
     {
-        private Note Note;
         public ServiceBunch Service;
         private MvxSubscriptionToken _token;
 
@@ -59,10 +58,7 @@ namespace ToDo.iOS.Views
 
         private void ActionExecute(AlertDialogMessage message)
         {
-            var Note = message.Note;
-            
-
-            this.Note = Note;
+    
             // Create a new Alert Controller
             UIAlertController actionSheetAlert = UIAlertController.Create(null, null, UIAlertControllerStyle.ActionSheet);
 
@@ -72,18 +68,9 @@ namespace ToDo.iOS.Views
                 foreach (var actionInfo in message.Actions)
                 {
                     UIAlertActionStyle style = actionInfo.IsCancel ? UIAlertActionStyle.Cancel : UIAlertActionStyle.Default;
-                    var alertAction = UIAlertAction.Create(actionInfo.Title, style,a => actionInfo.Action?.Invoke(Note));
+                    var alertAction = UIAlertAction.Create(actionInfo.Title, style,a => actionInfo.Action?.Invoke(message.Note));
                     actionSheetAlert.AddAction(alertAction);
 
-                    //actionSheetAlert.AddAction(UIAlertAction.Create("Remind After 5 minutes", UIAlertActionStyle.Default, Remind));
-
-                    //actionSheetAlert.AddAction(UIAlertAction.Create(CompletedLabel, UIAlertActionStyle.Default, (action) =>
-                    //{
-                    //    Note.IsDone = !Note.IsDone;
-                    //}
-                    //));
-
-                    //actionSheetAlert.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, null));
                 }
             }
 
@@ -93,21 +80,7 @@ namespace ToDo.iOS.Views
             this.PresentViewController(actionSheetAlert, true, null);
         }
 
-        //private void Remind(UIAlertAction action)
-        //{
-        //    var content = new UNMutableNotificationContent();
-        //    content.Title = "You have to do an important thing";
-        //    content.Subtitle = Note.Header;
-        //    content.Body = Note.Content;
-        //    content.Badge = 1;
 
-        //    var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(2, false);
-
-        //    var requestID = "sampleRequest";
-        //    var request = UNNotificationRequest.FromIdentifier(requestID, content, trigger);
-
-        //    UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { });
-        //}
     }
 }
 
