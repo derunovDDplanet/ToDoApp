@@ -20,8 +20,8 @@ namespace ToDo.iOS.Views
         private Note Note;
         public ServiceBunch Service;
         private MvxSubscriptionToken _token;
-        public bool IsDone { get; set; }
-        public IMvxCommand CompletedCommand { get; set; }
+
+
         public ToDoListView() : base("ToDoListView", null)
         {
             
@@ -48,6 +48,7 @@ namespace ToDo.iOS.Views
             set.Bind(AddNoteButton).To(vm => vm.AddNoteCommand);
             set.Bind(source).For(s => s.ItemRemoveCommand).To(v => v.RemoveFromToDoListCommand);
             set.Bind(SearchBar).For(s => s.Text).To(v => v.SearchText);
+            set.Bind(source).For(s => s.ActionSheetCommand).To(vm => vm.ActionSheetCommand);
             
             set.Apply();
             
@@ -60,22 +61,31 @@ namespace ToDo.iOS.Views
         {
             var Note = message.Note;
             
-            string CompletedLabel = Note.IsDone == true ? "Completed" : "Not completed";
 
             this.Note = Note;
             // Create a new Alert Controller
             UIAlertController actionSheetAlert = UIAlertController.Create(null, null, UIAlertControllerStyle.ActionSheet);
 
             // Add Actions
-            actionSheetAlert.AddAction(UIAlertAction.Create("Remind After 5 minutes", UIAlertActionStyle.Default, Remind));
-
-            actionSheetAlert.AddAction(UIAlertAction.Create(CompletedLabel, UIAlertActionStyle.Default, (action) =>
+            if (message.Actions != null)
             {
-                Note.IsDone = !Note.IsDone;
-            }
-            ));
+                foreach (var actionInfo in message.Actions)
+                {
+                    UIAlertActionStyle style = actionInfo.IsCancel ? UIAlertActionStyle.Cancel : UIAlertActionStyle.Default;
+                    var alertAction = UIAlertAction.Create(actionInfo.Title, style,a => actionInfo.Action?.Invoke(Note));
+                    actionSheetAlert.AddAction(alertAction);
 
-            actionSheetAlert.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, null));
+                    //actionSheetAlert.AddAction(UIAlertAction.Create("Remind After 5 minutes", UIAlertActionStyle.Default, Remind));
+
+                    //actionSheetAlert.AddAction(UIAlertAction.Create(CompletedLabel, UIAlertActionStyle.Default, (action) =>
+                    //{
+                    //    Note.IsDone = !Note.IsDone;
+                    //}
+                    //));
+
+                    //actionSheetAlert.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, null));
+                }
+            }
 
 
 
@@ -83,22 +93,21 @@ namespace ToDo.iOS.Views
             this.PresentViewController(actionSheetAlert, true, null);
         }
 
-        private void Remind(UIAlertAction action)
-        {
-            var content = new UNMutableNotificationContent();
-            content.Title = "You have to do an important thing";
-            content.Subtitle = Note.Header;
-            content.Body = Note.Content;
-            content.Badge = 1;
+        //private void Remind(UIAlertAction action)
+        //{
+        //    var content = new UNMutableNotificationContent();
+        //    content.Title = "You have to do an important thing";
+        //    content.Subtitle = Note.Header;
+        //    content.Body = Note.Content;
+        //    content.Badge = 1;
 
-            var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(2, false);
+        //    var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(2, false);
 
-            var requestID = "sampleRequest";
-            var request = UNNotificationRequest.FromIdentifier(requestID, content, trigger);
+        //    var requestID = "sampleRequest";
+        //    var request = UNNotificationRequest.FromIdentifier(requestID, content, trigger);
 
-
-            UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { });
-        }
+        //    UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { });
+        //}
     }
 }
 

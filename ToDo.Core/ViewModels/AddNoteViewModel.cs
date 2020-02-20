@@ -26,8 +26,16 @@ namespace ToDo.Core
 
 
         public Note Note { get; set; }
-        public bool IsEditing { get => _isEditing; set => SetProperty(ref _isEditing, value); }
-        public bool IsDone { get => _isDone; set => SetProperty(ref _isDone, value); }
+        public bool IsEditing
+        {
+            get => _isEditing;
+            set => SetProperty(ref _isEditing, value);
+        }
+        public bool IsDone
+        {
+            get => _isDone;
+            set => SetProperty(ref _isDone, value);
+        }
 
         public string Header { get; set; }
         

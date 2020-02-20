@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Acr.UserDialogs;
+
 using MvvmCross;
 using MvvmCross.IoC;
 using MvvmCross.Plugin.Messenger;

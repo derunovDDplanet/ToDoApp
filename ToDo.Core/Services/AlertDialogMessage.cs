@@ -11,5 +11,6 @@ namespace ToDo.Core.Services
             Note = sender as Note;
         }
         public Note Note { get; private set; }
+        public DialogActionInfo[] Actions { get; set; }
     }
 }

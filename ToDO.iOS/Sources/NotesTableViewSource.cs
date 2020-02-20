@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using Foundation;
+using Foundation; 
 using MvvmCross.Binding.Extensions;
 using MvvmCross.Commands;
 using MvvmCross.Platforms.Ios.Binding.Views;
@@ -11,18 +11,27 @@ namespace ToDo.iOS.Sources
 {
     public class NotesTableViewSource : MvxSimpleTableViewSource
     {
-        
+
+        public IMvxCommand ActionSheetCommand { get; set; }
+        public IMvxCommand<Note> ItemRemoveCommand { get; set; }
 
         public NotesTableViewSource(UITableView tableView) : base(tableView, typeof(MyTableViewCell))
         {
-            tableView.RegisterNibForCellReuse(MyTableViewCell.Nib, nameof(MyTableViewCell));
+            tableView.RegisterNibForCellReuse(MyTableViewCell.Nib, nameof(MyTableViewCell));        
             DeselectAutomatically = true;
         }
 
-        public IMvxCommand<Note> ItemRemoveCommand { get; set; }
 
 
-        
+        protected override UITableViewCell GetOrCreateCellFor(UITableView tableView, NSIndexPath indexPath, object item)
+        {
+            var cell = (MyTableViewCell)tableView.DequeueReusableCell(nameof(MyTableViewCell), indexPath);
+            cell.Prepare();
+            cell.ActionSheetCommand = ActionSheetCommand;
+            return cell;
+
+        }
+
 
         public override bool CanEditRow(UITableView tableView, NSIndexPath indexPath)
         {

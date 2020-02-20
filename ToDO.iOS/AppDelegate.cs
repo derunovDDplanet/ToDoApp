@@ -1,10 +1,13 @@
 ﻿using Foundation;
 using UserNotifications;
 using MvvmCross.Platforms.Ios.Core;
-using MvvmCross.Plugin.Color.Platforms.Ios;
+
 using ToDo.Core;
 using UIKit;
 using ToDo.iOS.Classes;
+using MvvmCross;
+using ToDo.iOS.Implementations;
+using ToDo.Core.Interfaces;
 
 namespace ToDo.iOS
 {
@@ -23,6 +26,8 @@ namespace ToDo.iOS
             });
 
             UNUserNotificationCenter.Current.Delegate = new UserNotificationCenterDelegate();
+
+            Mvx.IoCProvider.RegisterType<IRemind, Reminder>();
 
             return result;
         }

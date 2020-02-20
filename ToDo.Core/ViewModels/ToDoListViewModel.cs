@@ -9,7 +9,7 @@ using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
-
+using ToDo.Core.Interfaces;
 using ToDo.Core.Models;
 using ToDo.Core.Services;
 
@@ -30,7 +30,6 @@ namespace ToDo.Core
         {
             _navigationService = mvxNavigationService;
             Notes = new MvxObservableCollection<Note>();
-            Notes.CollectionChanged += OnCollectionChanged;
 
         }
 
@@ -39,7 +38,7 @@ namespace ToDo.Core
         public IMvxCommand AddNoteCommand => new MvxAsyncCommand(AddNoteExecute);
         public IMvxCommand<Note> NoteSelectedCommand => new MvxAsyncCommand<Note>(NoteSelected);
         public IMvxCommand<Note> RemoveFromToDoListCommand => new MvxAsyncCommand<Note>(RemoveFromToDoListExecute);
-
+        public IMvxCommand<Note> ActionSheetCommand => new MvxCommand<Note>(ActionSheetExecute);
         
 
 
@@ -80,25 +79,13 @@ namespace ToDo.Core
 
         public async override void ViewCreated()
         {
-            Notes = new MvxObservableCollection<Note>(await App.DataBase.GetItemsAsync());
-            foreach(var item in Notes)
-            {
-                item.ActionSheetEventHandler += ActionSheetExecute;
-                
-            }
+            _notes = new MvxObservableCollection<Note>(await App.DataBase.GetItemsAsync());
 
             SearchResult = Notes;
             base.ViewCreated();
             
         }
-        public override void ViewDestroy(bool viewFinishing = true)
-        {
-            foreach (var item in Notes)
-            {
-                item.ActionSheetEventHandler -= ActionSheetExecute;
-            }
-            base.ViewDestroy(viewFinishing);
-        }
+
 
         public override void ViewAppearing()
         {
@@ -128,6 +115,10 @@ namespace ToDo.Core
             {
                 result.note.Header = "Без названия";
             }
+            if (string.IsNullOrWhiteSpace(result.note.Content))
+            {
+                result.note.Content = "";
+            }
             Notes.Add(result.note);
             await RaisePropertyChanged(nameof(Notes));
             await RaisePropertyChanged(nameof(SearchResult));
@@ -143,32 +134,31 @@ namespace ToDo.Core
             
         }
 
-        private void ActionSheetExecute(object sender, EventArgs e)
+        private void ActionSheetExecute(Note sender )
         {
-            var message = new AlertDialogMessage(sender);
-            Service.Messenger.Publish(message);
-        }
-
-        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            var asd = sender as MvxObservableCollection<Note>;
-            if (e.NewItems != null)
+            string CompletedLabel = sender.IsDone == true ? "Completed" : "Not completed";
+            var dialogAction = new[]
             {
-                foreach (Note newItem in e.NewItems)
-                {
-                    newItem.ActionSheetEventHandler += ActionSheetExecute;
-                }
-            }
-            if (e.Action == NotifyCollectionChangedAction.Remove)
-                if (e.OldItems != null)
-                {
-                    foreach (Note oldItem in e.OldItems)
-                    {
-                        oldItem.ActionSheetEventHandler -= ActionSheetExecute;
-                    }
+                new DialogActionInfo ("Remind After 5 minutes",(note)=>Mvx.IoCProvider.Resolve<IRemind>().Remind(note)),
+                new DialogActionInfo (CompletedLabel,CompleteExecute),
+                new DialogActionInfo ("Cancel") {IsCancel=true}
+            };
+            var showAcionDialogMessage = new AlertDialogMessage(sender)
+            {
+                Actions = dialogAction
+            };
 
-                }
+            Service.Messenger.Publish(showAcionDialogMessage);
+
         }
+
+        public async void CompleteExecute(Note note)
+        {
+            note.IsDone = !note.IsDone;
+            await App.DataBase.SaveItemAsync(note);
+        }
+
+        
 
     }
 }

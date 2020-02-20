@@ -14,10 +14,6 @@ namespace ToDo.Core.Models
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
 
-        public event EventHandler ActionSheetEventHandler;
-
-        public IMvxCommand ActionSheetCommand => new MvxCommand(() => ActionSheetEventHandler?.Invoke(this,new EventArgs()));
-        
 
         public Note()
         {
@@ -31,9 +27,21 @@ namespace ToDo.Core.Models
             IsDone = isDone;
         }
 
-        public string Header { get => _header; set => SetProperty(ref _header, value); }
-        public string Content { get => _content; set => SetProperty(ref _content, value); }
-        public bool IsDone { get => _isDone; set => SetProperty(ref _isDone, value); }
+        public string Header
+        {
+            get => _header;
+            set => SetProperty(ref _header, value);
+        }
+        public string Content
+        {
+            get => _content;
+            set => SetProperty(ref _content, value);
+        }
+        public bool IsDone
+        {
+            get => _isDone;
+            set => SetProperty(ref _isDone, value);
+        }
 
         public override string ToString()
         {

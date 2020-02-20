@@ -100,7 +100,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Views\AddNoteView.cs" />
     <Compile Include="Views\AddNoteView.designer.cs">
       <DependentUpon>AddNoteView.cs</DependentUpon>
@@ -115,34 +114,19 @@
       <DependentUpon>MyTableViewCell.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\UserNotificationCenterDelegate.cs" />
+    <Compile Include="Interfaces\IPreparable.cs" />
+    <Compile Include="Implementations\Reminder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Acr.UserDialogs">
-      <Version>7.0.4</Version>
-    </PackageReference>
     <PackageReference Include="OxyPlot.Core" Version="2.0.0-unstable1035" />
     <PackageReference Include="OxyPlot.Xamarin.iOS" Version="1.1.0-unstable0011" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="TZStackView" Version="1.1.1" />
     <PackageReference Include="Com.Airbnb.iOS.Lottie">
       <Version>2.5.4</Version>
-    </PackageReference>
-    <PackageReference Include="Cirrious.FluentLayout">
-      <Version>2.7.0</Version>
     </PackageReference>
     <PackageReference Include="MvvmCross">
       <Version>6.2.3</Version>
     </PackageReference>
-    <PackageReference Include="MvvmCross.Plugin.Color">
-      <Version>6.2.3</Version>
-    </PackageReference>
-    <PackageReference Include="MvvmCross.Plugin.Json">
-      <Version>6.2.3</Version>
-    </PackageReference>
     <PackageReference Include="MvvmCross.Plugin.Messenger">
-      <Version>6.2.3</Version>
-    </PackageReference>
-    <PackageReference Include="MvvmCross.Plugin.Visibility">
       <Version>6.2.3</Version>
     </PackageReference>
   </ItemGroup>
@@ -155,6 +139,8 @@
     <Folder Include="Assets.xcassets\Appicon1.appiconset\" />
     <Folder Include="Assets.xcassets\.appiconset\" />
     <Folder Include="Classes\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Implementations\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ToDo.Core\ToDo.Core.csproj">
