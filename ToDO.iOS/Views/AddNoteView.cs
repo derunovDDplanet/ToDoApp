@@ -20,7 +20,11 @@ namespace ToDo.iOS.Views
         public bool IsDone
         {
             get => _isDone;
-            set=> _isDone = value;
+            set
+            {
+                _isDone = value;
+                CompleteLabel();
+            }
         }
         private bool _isEditing;
         public bool IsEditing
@@ -90,7 +94,12 @@ namespace ToDo.iOS.Views
 
         private void CompleteUI()
         {
-            if(!IsDone)CompletedLabel.TextColor = UIColor.Red; else CompletedLabel.TextColor = UIColor.Green;
+            CompleteLabel();
+        }
+
+        private void CompleteLabel()
+        {
+            if (!IsDone) CompletedLabel.TextColor = UIColor.Red; else CompletedLabel.TextColor = UIColor.Green;
             if (!IsDone) CompletedLabel.Text = "Not completed"; else CompletedLabel.Text = "Completed";
         }
     }
